@@ -1,12 +1,12 @@
 {
-	"name": "df_SCD_Type1",
+	"name": "df_SCD_Type1_2",
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "get_source_data_files",
+						"referenceName": "source_files",
 						"type": "DatasetReference"
 					},
 					"name": "sourcedata"
@@ -28,12 +28,12 @@
 			],
 			"scriptLines": [
 				"parameters{",
-				"     file_name as string",
+				"     filepath as string",
 				"}",
 				"source(output(",
-				"          Emp_id as integer,",
+				"          Emp_id as string,",
 				"          Emp_Name as string,",
-				"          Salary as integer,",
+				"          Salary as string,",
 				"          Location as string",
 				"     ),",
 				"     allowSchemaDrift: true,",
