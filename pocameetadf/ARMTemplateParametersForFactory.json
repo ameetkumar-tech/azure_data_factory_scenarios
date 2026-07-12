@@ -1,0 +1,27 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "pocameetadf"
+		},
+		"AzureDataLakeStorage_20260712_accountKey": {
+			"value": ""
+		},
+		"AzureSqlDatabase_20260712_password": {
+			"value": ""
+		},
+		"AzureDataLakeStorage_20260712_properties_typeProperties_url": {
+			"value": "https://ameetsa.dfs.core.windows.net/"
+		},
+		"AzureSqlDatabase_20260712_properties_typeProperties_server": {
+			"value": "sqlserverameet.database.windows.net"
+		},
+		"AzureSqlDatabase_20260712_properties_typeProperties_database": {
+			"value": "sampledbameet"
+		},
+		"AzureSqlDatabase_20260712_properties_typeProperties_userName": {
+			"value": "ameet"
+		}
+	}
+}
