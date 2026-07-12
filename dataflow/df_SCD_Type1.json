@@ -1,0 +1,63 @@
+{
+	"name": "df_SCD_Type1",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "Emp_file_20260712",
+						"type": "DatasetReference"
+					},
+					"name": "sourcedata"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "sql_employee_sink",
+						"type": "DatasetReference"
+					},
+					"name": "Targetdataset"
+				}
+			],
+			"transformations": [
+				{
+					"name": "alterRowsourcedata"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          Emp_id as integer,",
+				"          Emp_Name as string,",
+				"          Salary as integer,",
+				"          Location as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> sourcedata",
+				"sourcedata alterRow(upsertIf(1==1)) ~> alterRowsourcedata",
+				"alterRowsourcedata sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          Emp_id as integer,",
+				"          Emp_Name as string,",
+				"          Salary as decimal(19,4),",
+				"          Location as string,",
+				"          IsActive as integer,",
+				"          ValidFrom as timestamp,",
+				"          ValidTo as timestamp",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:false,",
+				"     updateable:false,",
+				"     upsertable:true,",
+				"     keys:['Emp_id'],",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> Targetdataset"
+			]
+		}
+	}
+}
