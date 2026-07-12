@@ -426,6 +426,7 @@
 						"     allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     ignoreNoFilesFound: false,",
+						"     moveFiles: [($filename),'archive'],",
 						"     wildcardPaths:[($filename)]) ~> sourcedata",
 						"sourcedata alterRow(upsertIf(1==1)) ~> alterRowsourcedata",
 						"alterRowsourcedata sink(allowSchemaDrift: true,",
