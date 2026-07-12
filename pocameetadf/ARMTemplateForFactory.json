@@ -126,6 +126,114 @@
 										},
 										"traceLevel": "Fine"
 									}
+								},
+								{
+									"name": "Move_loaded_files",
+									"type": "Copy",
+									"dependsOn": [
+										{
+											"activity": "df_SCD_Type1_2",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
+									"policy": {
+										"timeout": "0.12:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"source": {
+											"type": "DelimitedTextSource",
+											"storeSettings": {
+												"type": "AzureBlobFSReadSettings",
+												"recursive": true,
+												"wildcardFileName": {
+													"value": "@item().name",
+													"type": "Expression"
+												},
+												"enablePartitionDiscovery": false
+											},
+											"formatSettings": {
+												"type": "DelimitedTextReadSettings"
+											}
+										},
+										"sink": {
+											"type": "DelimitedTextSink",
+											"storeSettings": {
+												"type": "AzureBlobFSWriteSettings"
+											},
+											"formatSettings": {
+												"type": "DelimitedTextWriteSettings",
+												"quoteAllText": true,
+												"fileExtension": ".txt"
+											}
+										},
+										"enableStaging": false,
+										"translator": {
+											"type": "TabularTranslator",
+											"typeConversion": true,
+											"typeConversionSettings": {
+												"allowDataTruncation": true,
+												"treatBooleanAsNumber": false
+											}
+										}
+									},
+									"inputs": [
+										{
+											"referenceName": "sourcefiles",
+											"type": "DatasetReference",
+											"parameters": {}
+										}
+									],
+									"outputs": [
+										{
+											"referenceName": "Archive_files",
+											"type": "DatasetReference",
+											"parameters": {}
+										}
+									]
+								},
+								{
+									"name": "Delete_input_container_files",
+									"type": "Delete",
+									"dependsOn": [
+										{
+											"activity": "Move_loaded_files",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
+									"policy": {
+										"timeout": "0.12:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"dataset": {
+											"referenceName": "sourcefiles",
+											"type": "DatasetReference",
+											"parameters": {}
+										},
+										"enableLogging": false,
+										"storeSettings": {
+											"type": "AzureBlobFSReadSettings",
+											"recursive": true,
+											"wildcardFileName": {
+												"value": "@item().name",
+												"type": "Expression"
+											},
+											"enablePartitionDiscovery": false
+										}
+									}
 								}
 							]
 						}
@@ -175,7 +283,36 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/dataflows/df_SCD_Type1')]",
 				"[concat(variables('factoryId'), '/datasets/get_source_data_files')]",
-				"[concat(variables('factoryId'), '/dataflows/df_SCD_Type1_2')]"
+				"[concat(variables('factoryId'), '/dataflows/df_SCD_Type1_2')]",
+				"[concat(variables('factoryId'), '/datasets/sourcefiles')]",
+				"[concat(variables('factoryId'), '/datasets/Archive_files')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Archive_files')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStorage_20260712",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileSystem": "archive"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorage_20260712')]"
 			]
 		},
 		{
@@ -568,7 +705,6 @@
 						"     allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     ignoreNoFilesFound: false,",
-						"     moveFiles: [($filename),'archive'],",
 						"     wildcardPaths:[($filename)]) ~> sourcedata",
 						"sourcedata alterRow(upsertIf(1==1)) ~> alterRowsourcedata",
 						"alterRowsourcedata sink(allowSchemaDrift: true,",
