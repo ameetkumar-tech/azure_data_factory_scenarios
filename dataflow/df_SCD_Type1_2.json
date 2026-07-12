@@ -6,7 +6,7 @@
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "source_files",
+						"referenceName": "sourcefiles",
 						"type": "DatasetReference"
 					},
 					"name": "sourcedata"
@@ -28,7 +28,7 @@
 			],
 			"scriptLines": [
 				"parameters{",
-				"     filepath as string",
+				"     filename as string",
 				"}",
 				"source(output(",
 				"          Emp_id as string,",
@@ -38,7 +38,8 @@
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> sourcedata",
+				"     ignoreNoFilesFound: false,",
+				"     wildcardPaths:[($filename)]) ~> sourcedata",
 				"sourcedata alterRow(upsertIf(1==1)) ~> alterRowsourcedata",
 				"alterRowsourcedata sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",

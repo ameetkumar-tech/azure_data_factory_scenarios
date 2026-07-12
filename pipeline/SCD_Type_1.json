@@ -61,7 +61,13 @@
 							"typeProperties": {
 								"dataflow": {
 									"referenceName": "df_SCD_Type1_2",
-									"type": "DataFlowReference"
+									"type": "DataFlowReference",
+									"parameters": {
+										"filename": {
+											"value": "'@{item().name}'",
+											"type": "Expression"
+										}
+									}
 								},
 								"compute": {
 									"coreCount": 8,
@@ -95,6 +101,7 @@
 					],
 					"storeSettings": {
 						"type": "AzureBlobFSReadSettings",
+						"recursive": true,
 						"enablePartitionDiscovery": false
 					},
 					"formatSettings": {
