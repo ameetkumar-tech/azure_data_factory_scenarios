@@ -23,6 +23,9 @@
 		"AzureSqlDatabase_20260712_properties_typeProperties_userName": {
 			"value": "ameet"
 		},
+		"Event_based_trigger_properties_typeProperties_scope": {
+			"value": "/subscriptions/80ea84e8-afce-4851-928a-9e2219724c69/resourceGroups/1-4ca0e895-playground-sandbox/providers/Microsoft.Storage/storageAccounts/ameetsa"
+		},
 		"containerUri": {
 			"value": ""
 		},

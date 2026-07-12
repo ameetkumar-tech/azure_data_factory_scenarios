@@ -30,6 +30,10 @@
 		"AzureSqlDatabase_20260712_properties_typeProperties_userName": {
 			"type": "string",
 			"defaultValue": "ameet"
+		},
+		"Event_based_trigger_properties_typeProperties_scope": {
+			"type": "string",
+			"defaultValue": "/subscriptions/80ea84e8-afce-4851-928a-9e2219724c69/resourceGroups/1-4ca0e895-playground-sandbox/providers/Microsoft.Storage/storageAccounts/ameetsa"
 		}
 	},
 	"variables": {
@@ -42,38 +46,6 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"activities": [
-					{
-						"name": "df_SCD_Type1",
-						"type": "ExecuteDataFlow",
-						"state": "Inactive",
-						"onInactiveMarkAs": "Succeeded",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "df_SCD_Type1",
-								"type": "DataFlowReference",
-								"parameters": {},
-								"datasetParameters": {
-									"sourcedata": {},
-									"Targetdataset": {}
-								}
-							},
-							"staging": {},
-							"compute": {
-								"coreCount": 8,
-								"computeType": "General"
-							},
-							"traceLevel": "Fine"
-						}
-					},
 					{
 						"name": "loop_through_all_source_files",
 						"type": "ForEach",
@@ -281,7 +253,6 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/dataflows/df_SCD_Type1')]",
 				"[concat(variables('factoryId'), '/datasets/get_source_data_files')]",
 				"[concat(variables('factoryId'), '/dataflows/df_SCD_Type1_2')]",
 				"[concat(variables('factoryId'), '/datasets/sourcefiles')]",
@@ -733,6 +704,36 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/sourcefiles')]",
 				"[concat(variables('factoryId'), '/datasets/sql_employee_sink')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Event_based_trigger')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Stopped",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "SCD_Type_1",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					}
+				],
+				"type": "BlobEventsTrigger",
+				"typeProperties": {
+					"blobPathBeginsWith": "/input/blobs/",
+					"ignoreEmptyBlobs": true,
+					"scope": "[parameters('Event_based_trigger_properties_typeProperties_scope')]",
+					"events": [
+						"Microsoft.Storage.BlobCreated"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/SCD_Type_1')]"
 			]
 		}
 	]

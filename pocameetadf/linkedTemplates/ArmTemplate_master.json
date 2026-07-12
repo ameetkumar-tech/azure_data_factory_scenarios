@@ -31,6 +31,10 @@
 			"type": "string",
 			"defaultValue": "ameet"
 		},
+		"Event_based_trigger_properties_typeProperties_scope": {
+			"type": "string",
+			"defaultValue": "/subscriptions/80ea84e8-afce-4851-928a-9e2219724c69/resourceGroups/1-4ca0e895-playground-sandbox/providers/Microsoft.Storage/storageAccounts/ameetsa"
+		},
 		"containerUri": {
 			"type": "string",
 			"metadata": "URI to storage account containing linked ARM templates"
@@ -75,6 +79,9 @@
 					},
 					"AzureSqlDatabase_20260712_properties_typeProperties_userName": {
 						"value": "[parameters('AzureSqlDatabase_20260712_properties_typeProperties_userName')]"
+					},
+					"Event_based_trigger_properties_typeProperties_scope": {
+						"value": "[parameters('Event_based_trigger_properties_typeProperties_scope')]"
 					}
 				}
 			},
