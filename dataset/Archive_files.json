@@ -2,7 +2,7 @@
 	"name": "Archive_files",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "AzureDataLakeStorage_20260712",
+			"referenceName": "AzureDataLakeStorage_20260717",
 			"type": "LinkedServiceReference"
 		},
 		"annotations": [],
