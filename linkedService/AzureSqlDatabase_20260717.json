@@ -1,0 +1,17 @@
+{
+	"name": "AzureSqlDatabase_20260717",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureSqlDatabase",
+		"typeProperties": {
+			"server": "pocsqlserverameet.database.windows.net",
+			"database": "sqlserverpocammeet",
+			"encrypt": "mandatory",
+			"trustServerCertificate": false,
+			"authenticationType": "SQL",
+			"userName": "ameet",
+			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDBDNDhGODFCLURFNTAtNEMwNC1CODAxLThGMDVGQ0MwMEYxOV82MDAzNmYzZS0wMWRmLTQ3MTgtYTBjYy1lNDY4MGJlZjlmNzQiDQp9"
+		}
+	}
+}
