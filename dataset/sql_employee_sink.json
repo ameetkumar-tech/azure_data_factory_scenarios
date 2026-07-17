@@ -2,7 +2,7 @@
 	"name": "sql_employee_sink",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "AzureSqlDatabase_20260712",
+			"referenceName": "AzureSqlDatabase_20260717",
 			"type": "LinkedServiceReference"
 		},
 		"annotations": [],
