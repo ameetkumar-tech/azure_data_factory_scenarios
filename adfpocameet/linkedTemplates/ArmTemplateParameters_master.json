@@ -1,0 +1,54 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "adfpocameet"
+		},
+		"AzureDataLakeStorage_20260712_accountKey": {
+			"value": ""
+		},
+		"AzureDataLakeStorage_20260717_accountKey": {
+			"value": ""
+		},
+		"AzureSqlDatabase_20260712_password": {
+			"value": ""
+		},
+		"AzureSqlDatabase_20260717_password": {
+			"value": ""
+		},
+		"AzureDataLakeStorage_20260712_properties_typeProperties_url": {
+			"value": "https://ameetsa.dfs.core.windows.net/"
+		},
+		"AzureDataLakeStorage_20260717_properties_typeProperties_url": {
+			"value": "https://storagepocameet.dfs.core.windows.net/"
+		},
+		"AzureSqlDatabase_20260712_properties_typeProperties_server": {
+			"value": "sqlserverameet.database.windows.net"
+		},
+		"AzureSqlDatabase_20260712_properties_typeProperties_database": {
+			"value": "sampledbameet"
+		},
+		"AzureSqlDatabase_20260712_properties_typeProperties_userName": {
+			"value": "ameet"
+		},
+		"AzureSqlDatabase_20260717_properties_typeProperties_server": {
+			"value": "pocsqlserverameet.database.windows.net"
+		},
+		"AzureSqlDatabase_20260717_properties_typeProperties_database": {
+			"value": "sqlserverpocammeet"
+		},
+		"AzureSqlDatabase_20260717_properties_typeProperties_userName": {
+			"value": "ameet"
+		},
+		"Event_based_trigger_properties_typeProperties_scope": {
+			"value": "/subscriptions/80ea84e8-afce-4851-928a-9e2219724c69/resourceGroups/1-4ca0e895-playground-sandbox/providers/Microsoft.Storage/storageAccounts/ameetsa"
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
+		}
+	}
+}
